@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>Selling/Buying aPpLe</header>
+    <nav></nav>
+    <div>
+{% if items %}
+  <ul>
+    {% for item in items %}
+      <li><a href="{% url 'detail' item.id %}"> {{item.what}} {{ item.region}}</a></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+          <p> No postings so far </p>
+      {% endif %}
+<form action="/apple/new" >
+    <input type="submit" value="Post">
+  </form>
+    </div>
+  </body>
+</html>

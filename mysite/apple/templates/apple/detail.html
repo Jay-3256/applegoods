@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1> {{item.titleline}} </h1>
+    <div>  {{item.body}} </div>
+  <div>
+    <img  src="{{ item.userfile.url}}" style="width:300px; height:200px">
+  </div>
+
+
+    <form action="{% url 'edit' item.id %}">
+      {% csrf_token %}
+      <input type="submit" value="edit">
+    </form>
+
+    <form method="post" action="{% url 'delete' item.id %}">
+      {% csrf_token %}
+      <input type="submit" value="delete">
+    </form>
+
+  </body>
+</html>

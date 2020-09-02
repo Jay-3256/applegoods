@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% if itemform %}
+    <h1> Editing </h1>
+    <form action="{% url 'edit' item.id %}" method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+
+      <table>
+      {{itemform}}
+    </table>
+
+    <input type="submit" value="Finish Editing">
+    </form>
+    {% endif %}
+
+    </script>
+  </body>
+</html>
