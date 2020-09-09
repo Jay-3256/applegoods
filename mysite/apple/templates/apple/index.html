@@ -8,7 +8,13 @@
 </head>
 <body>
   <header>Selling/Buying  </header>
-  <nav></nav>
+
+  <form method="POST" action="">
+    {% csrf_token %}
+  <input type="text" name="userinput">
+  <button type="submit"> Search </button>
+</form>
+<p>{{items|length}}  postings in total</p>
   <table>
     <tr>
       <th>Number</th>
@@ -27,6 +33,23 @@
     </tr>
     {% endfor %}
   </table>
+
+  <div>
+    <span>
+      {% if items.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ items.previous_page_number }}">previous</a>
+      {% endif %}
+    <span>
+        Page {{ items.number }} of {{ items.paginator.num_pages }}.
+    </span>
+
+      {% if items.has_next%}
+      <a href="?page={{ items.next_page_number }}">next</a>
+      <a href="?page={{ items.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    <span>
+  </div>
 
   <form action="/apple/new" >
     <input type="submit" value="Post">
