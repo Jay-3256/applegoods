@@ -1,5 +1,6 @@
 from django.db import models
-
+from datetime import datetime
+from django.utils import timezone
 # Create your models here.
 
 class Item(models.Model):
@@ -32,3 +33,5 @@ class Item(models.Model):
     body =models.TextField(default=None)
     Issold = models.IntegerField(default=0)
     region = models.CharField(max_length=10, choices = REGION_CHOICES)
+    hit = models.IntegerField(default=0)
+    date = models.DateTimeField(default=timezone.now)

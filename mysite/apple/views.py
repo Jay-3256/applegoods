@@ -26,6 +26,8 @@ def new(request):
 def detail(request, item_id):
 	try:
 		item = Item.objects.get(pk=item_id)
+		item.hit = item.hit +1
+		item.save()
 	except Item.DoesNotExist:
 		raise Http404("Item does not exist")
 	return render(request, 'apple/detail.html', {'item': item})

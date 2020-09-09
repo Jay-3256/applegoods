@@ -1,25 +1,41 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <header>Selling/Buying aPpLe</header>
-    <nav></nav>
-    <div>
-{% if items %}
-  <ul>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'apple/style.css' %}">
+  <title></title>
+</head>
+<body>
+  <header>Selling/Buying  </header>
+  <nav></nav>
+  <table>
+    <tr>
+      <th>Number</th>
+      <th style="width:50%">Title</th>
+      <th>Author</th>
+      <th>Date</th>
+      <th>View Counts</th>
+    </tr>
     {% for item in items %}
-      <li><a href="{% url 'detail' item.id %}"> {{item.what}} {{ item.region}}</a></li>
-          {% endfor %}
-        </ul>
-      {% else %}
-          <p> No postings so far </p>
-      {% endif %}
-<form action="/apple/new" >
+    <tr>
+      <td>{{item.id}}</td>
+      <td style="width:50%"><span class="what">[{{item.get_what_display}}]</span><span class="region">{{item.get_region_display}}</span><a href="{% url 'detail' item.id %}">{{item.titleline}} </a></td>
+      <td>Author</td>
+      <td>{{item.date|date:"F d"}}</td>
+      <td>{{item.hit}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <form action="/apple/new" >
     <input type="submit" value="Post">
   </form>
-    </div>
-  </body>
+
+  <footer>
+    <p> Selling/Buying  </p>
+    <p> Email: jang0065@umn.edu </p>
+  </footer>
+
+</body>
 </html>

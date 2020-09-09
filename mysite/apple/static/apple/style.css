@@ -1,0 +1,48 @@
+header {
+  background-color:  #a0d2eb;
+  color:white;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+
+
+table{
+  width:100%;
+  border-collapse: collapse;
+}
+
+th{
+  background-color: #e5eaf5;
+}
+
+td{
+
+}
+
+.what {
+  color: #a28089;
+  margin-left: 2px;
+  margin-right:2px;
+}
+
+.region {
+  color: #8458B3;
+  margin-left: 2px;
+  margin-right:10px;
+  font-size: 14px;
+}
+
+form {
+  float:right;
+}
+
+footer {
+  margin-top:30px;
+  padding:10px;
+  height:500px;
+  background-color: #a28089
+}

@@ -1,26 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="{% static 'apple/detail.css' %}">
     <title></title>
   </head>
   <body>
-    <h1> {{item.titleline}} </h1>
-    <div>  {{item.body}} </div>
-  <div>
-    <img  src="{{ item.userfile.url}}" style="width:300px; height:200px">
+    <header>Selling/Buying  </header>
+    <div class="image">
+    <img  src="{{ item.userfile.url}}" >
+  <h1> {{item.titleline}} </h1>
+  <h3>{{item.price}}won </h3>
+  <h5> {{item.get_region_display}} </h5>
+  <p> {{item.body}}</p>
+  <p> views: {{item.hit}}</p>
+  <hr>
+  <span>
+  <form action="{% url 'edit' item.id %}">
+    {% csrf_token %}
+    <input type="submit" value="edit">
+  </form>
+  <form method="post" action="{% url 'delete' item.id %}">
+    {% csrf_token %}
+    <input type="submit" value="delete">
+  </form>
+</span>
   </div>
 
-
-    <form action="{% url 'edit' item.id %}">
-      {% csrf_token %}
-      <input type="submit" value="edit">
-    </form>
-
-    <form method="post" action="{% url 'delete' item.id %}">
-      {% csrf_token %}
-      <input type="submit" value="delete">
-    </form>
-
+  <footer>
+    <p> Selling/Buying  </p>
+    <p> Email: jang0065@umn.edu </p>
+  </footer>
   </body>
 </html>
