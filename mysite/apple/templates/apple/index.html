@@ -7,7 +7,10 @@
   <title></title>
 </head>
 <body>
-  <header>Selling/Buying  </header>
+  <header>Selling/Buying 
+    <a  href="{% url 'account:login' %}" style="margin-left: auto"> Sign In </a>
+    <a  href="{% url 'account:signup' %}" style="margin-left:5px"> Sign Up </a>
+  </header>
 
   <form method="POST" action="">
     {% csrf_token %}
@@ -34,20 +37,41 @@
     {% endfor %}
   </table>
   <div>
+
+      {% if userinput is None %}
     <span>
       {% if items.has_previous %}
-      <a href="?page=1&userinput={{userinput}}">&laquo; first</a>
-      <a href="?page={{ items.previous_page_number }}&userinput={{userinput}}">previous</a>
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ items.previous_page_number }}">previous</a>
       {% endif %}
     <span>
         Page {{ items.number }} of {{ items.paginator.num_pages }}.
     </span>
 
       {% if items.has_next%}
-      <a href="?page={{ items.next_page_number }}&userinput={{userinput}}">next</a>
-      <a href="?page={{ items.paginator.num_pages }}&userinput={{userinput}}">last &raquo;</a>
+      <a href="?page={{ items.next_page_number }}">next</a>
+      <a href="?page={{ items.paginator.num_pages }}">last &raquo;</a>
       {% endif %}
     <span>
+
+      {% else %}
+      <span>
+        {% if items.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ items.previous_page_number }}">previous</a>
+        {% endif %}
+      <span>
+          Page {{ items.number }} of {{ items.paginator.num_pages }}.
+      </span>
+
+        {% if items.has_next%}
+        <a href="?page={{ items.next_page_number }}">next</a>
+        <a href="?page={{ items.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      <span>
+
+      {% endif %}
+
   </div>
 
   <form action="/apple/new" >

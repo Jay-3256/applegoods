@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div>
+      <h1>Sign up</h1>
+
+      <form method="POST" action="{%url 'account:signup' %}">
+        {% csrf_token %}
+        Username:
+        <br>
+        <input name="username" type="text">
+        <br>
+        Password:
+        <br>
+        <input name="password1" type="password">
+        <br>
+        Confirm Password:
+        <br>
+        <input name="password2" type="password">
+        <br><br>
+        <input type="submit" value="Sign up">
+      </div>
+  </body>
+</div>
+</html>
