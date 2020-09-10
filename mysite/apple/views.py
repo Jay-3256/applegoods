@@ -5,33 +5,54 @@ from .models import Item
 from .forms import *
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.db.models import Max
 
 # Create your views here.
 def index(request):
-	if request.method == 'POST':
-		userinput = request.POST.get('userinput', None)
+
+	if request.method =="POST":
+		userinput = request.POST.get('userinput')
+	elif request.GET.get('userinput'):
+		userinput = request.GET.get('userinput')
+	else:
+		userinput = None
+	items = Item.objects.all()
+	if userinput is not None:
 		items = Item.objects.filter(
 		Q(titleline__contains = userinput) |
 		Q(body__contains = userinput)
 		)
-		items = Paginator(items, 1)
-		page_number = request.GET.get('page')
-		page_obj =	items.get_page(page_number)
-		template = loader.get_template('apple/index.html')
+	items = Paginator(items, 1)
+	page_number = request.GET.get('page')
+	page_obj = items.get_page(page_number)
+	template = loader.get_template('apple/index.html')
+	if userinput is not None:
 		context = {
-			'items': page_obj
+		'items': page_obj,
+		'userinput': userinput
 		}
-		return HttpResponse(template.render(context,request))
 	else:
-		items = Item.objects.all()
+		context = {
+		'items': page_obj
+		}
+	return HttpResponse(template.render(context,request))
+
+	if 0:
+		if request.GET.get('userinput', 0) or request.POST.get('userinput',0):
+			userinput = Max(request.GET.get('userinput', 0), request.POST.get('userinput', 0) )
+
+		else:
+			items = Item.objects.all()
 		items = Paginator(items, 1)
 		page_number = request.GET.get('page')
-		page_obj =	items.get_page(page_number)
+		page_obj = items.get_page(page_number)
 		template = loader.get_template('apple/index.html')
 		context = {
-			'items': page_obj
+			'items': page_obj,
+			'userinput':userinput
 		}
 		return HttpResponse(template.render(context,request))
+
 
 def new(request):
 	if request.method == 'POST':
