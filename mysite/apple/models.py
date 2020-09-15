@@ -1,6 +1,9 @@
 from django.db import models
 from datetime import datetime
 from django.utils import timezone
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 
 class Item(models.Model):
@@ -26,6 +29,8 @@ class Item(models.Model):
     ('IN','Incheon'),
     ('GW','Gwangju'),
     )
+
+    author = models.CharField(max_length = 20, default="f")
     titleline = models.CharField(max_length=30, default=None)
     what = models.CharField(max_length=30, choices = WHAT_CHOICES)
     price = models.IntegerField()

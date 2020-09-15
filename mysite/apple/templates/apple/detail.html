@@ -10,12 +10,15 @@
     <header>Selling/Buying  </header>
     <div class="image">
     <img  src="{{ item.userfile.url}}" >
+
   <h1> {{item.titleline}} </h1>
   <h3>{{item.price}}won </h3>
   <h5> {{item.get_region_display}} </h5>
   <p> {{item.body}}</p>
   <p> views: {{item.hit}}</p>
   <hr>
+
+  {% if request.user.get_username == item.author %}
   <span>
   <form action="{% url 'edit' item.id %}">
     {% csrf_token %}
@@ -26,6 +29,8 @@
     <input type="submit" value="delete">
   </form>
 </span>
+{% endif %}
+
   </div>
 
   <footer>

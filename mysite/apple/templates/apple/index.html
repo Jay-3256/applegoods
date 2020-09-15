@@ -8,8 +8,13 @@
 </head>
 <body>
   <header>Selling/Buying 
-    <a  href="{% url 'account:login' %}" style="margin-left: auto"> Sign In </a>
+    {% if user.is_authenticated %}
+    <p class="header" style="margin-left:auto;"> Welcome, {{user.get_username}}!  </p>
+    <a  href="{% url 'account:logout' %}" style="font-size: 20px; margin-left: 5px;"> Log out </a>
+    {% else %}
+    <a  href="{% url 'account:login' %}" style="margin-left: auto;"> Sign In </a>
     <a  href="{% url 'account:signup' %}" style="margin-left:5px"> Sign Up </a>
+    {% endif %}
   </header>
 
   <form method="POST" action="">
@@ -27,10 +32,11 @@
       <th>View Counts</th>
     </tr>
     {% for item in items %}
+    <p> {{item.author}} </p>
     <tr>
       <td>{{item.id}}</td>
       <td style="width:50%"><span class="what">[{{item.get_what_display}}]</span><span class="region">{{item.get_region_display}}</span><a href="{% url 'detail' item.id %}">{{item.titleline}} </a></td>
-      <td>Author</td>
+      <td>{{item.author}}</td>
       <td>{{item.date|date:"F d"}}</td>
       <td>{{item.hit}}</td>
     </tr>
@@ -75,7 +81,13 @@
   </div>
 
   <form action="/apple/new" >
-    <input type="submit" value="Post">
+    <input type=
+    {% if user.is_authenticated %}
+    "submit"
+    {% else %}
+    "button" onclick ="alert('Login Required');"
+    {% endif %}
+    value="Post">
   </form>
 
   <footer>

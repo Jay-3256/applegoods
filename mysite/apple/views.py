@@ -5,6 +5,7 @@ from .models import Item
 from .forms import *
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -34,14 +35,19 @@ def index(request):
 		context = {
 		'items': page_obj
 		}
+
 	return HttpResponse(template.render(context,request))
 
+@login_required
 def new(request):
 	if request.method == 'POST':
 		i = ItemForm(request.POST, request.FILES)
 		if i.is_valid():
-			i.save()
+			item = i.save(commit=False)
+			item.author = request.user
+			item.save()
 			return HttpResponseRedirect('/apple/')
+
 	else:
 		i = ItemForm()
 		return render(request, 'apple/new.html',{'itemform':i})
