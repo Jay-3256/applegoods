@@ -3,6 +3,7 @@
 <html lang="en" dir="ltr">
   <head>
       <meta charset="utf-8">
+
       <link rel="stylesheet" type="text/css" href="{% static 'apple/detail.css' %}">
     <title></title>
   </head>
@@ -24,9 +25,9 @@
     {% csrf_token %}
     <input type="submit" value="edit">
   </form>
-  <form method="post" action="{% url 'delete' item.id %}">
+  <form onsubmit = "return confirm('Do you really want to delete?')" method="post" action="{% url 'delete' item.id %}">
     {% csrf_token %}
-    <input type="submit" value="delete">
+    <input class='delete'  type="submit" value="delete">
   </form>
 </span>
 {% endif %}
@@ -37,5 +38,6 @@
     <p> Selling/Buying  </p>
     <p> Email: jang0065@umn.edu </p>
   </footer>
+    <script src="{% static 'apple/detail.js' %}"></script>
   </body>
 </html>
