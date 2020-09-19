@@ -30,6 +30,6 @@ Still in Progress
 
 
 ## Credits
-Design: [Dangeun Market]https://www.daangn.com/
+Design: [Dangeun Market]https://www.daangn.com/ <b></b>
 New login system: [blog]https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
 
