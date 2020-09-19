@@ -10,20 +10,21 @@
 
       <form method="POST" action="{%url 'account:signup' %}">
         {% csrf_token %}
-        Username:
-        <br>
-        <input name="username" type="text">
-        <br>
-        Password:
-        <br>
-        <input name="password1" type="password">
-        <br>
-        Confirm Password:
-        <br>
-        <input name="password2" type="password">
-        <br><br>
-        <input type="submit" value="Sign up">
-      </div>
+        {% for field in form %}
+        <p>
+          {{field.label_tag}}<br>
+          {{field}}
+          {% if field.help_text %}
+          <small style="color:gray"> {{field.help_text}} </small>
+          {% endif %}
+          {% for error in field.errors %}
+          <p style="color: red"> {{error}}</p>
+          {% endfor %}
+        </p>
+        {% endfor %}
+        <button type="submit"> Sign up </button>
+      </form>
+    </div>
   </body>
 </div>
 </html>

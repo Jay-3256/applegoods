@@ -32,7 +32,7 @@
       <th>View Counts</th>
     </tr>
     {% for item in items %}
-    <p> {{item.author}} </p>
+    
     <tr>
       <td>{{item.id}}</td>
       <td style="width:50%"><span class="what">[{{item.get_what_display}}]</span><span class="region">{{item.get_region_display}}</span><a href="{% url 'detail' item.id %}">{{item.titleline}} </a></td>
