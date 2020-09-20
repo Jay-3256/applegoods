@@ -2,42 +2,80 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-      <meta charset="utf-8">
+    <meta charset="utf-8" />
 
-      <link rel="stylesheet" type="text/css" href="{% static 'apple/detail.css' %}">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'apple/detail.css' %}"
+    />
     <title></title>
   </head>
   <body>
-    <header>Selling/Buying  </header>
+    <header>Selling/Buying </header>
     <div class="image">
-    <img  src="{{ item.userfile.url}}" >
+      <img src="{{ item.userfile.url}}" />
 
-  <h1> {{item.titleline}} </h1>
-  <h3>{{item.price}}won </h3>
-  <h5> {{item.get_region_display}} </h5>
-  <p> {{item.body}}</p>
-  <p> views: {{item.hit}}</p>
-  <hr>
+      <h1>{{item.titleline}}</h1>
+      <h3>{{item.price}}won</h3>
+      <h5>{{item.get_region_display}}</h5>
+      <p>{{item.body}}</p>
+      <p>views: {{item.hit}}</p>
+      <hr />
 
-  {% if request.user.get_username == item.author %}
-  <span>
-  <form action="{% url 'edit' item.id %}">
-    {% csrf_token %}
-    <input type="submit" value="edit">
-  </form>
-  <form onsubmit = "return confirm('Do you really want to delete?')" method="post" action="{% url 'delete' item.id %}">
-    {% csrf_token %}
-    <input class='delete'  type="submit" value="delete">
-  </form>
-</span>
-{% endif %}
+      {% if request.user.get_username == item.author %}
+      <span>
+        <form action="{% url 'apple:edit' item.id %}">
+          {% csrf_token %}
+          <input type="submit" value="edit" />
+        </form>
+        <form
+          onsubmit="return confirm('Do you really want to delete?')"
+          method="post"
+          action="{% url 'apple:delete' item.id %}"
+        >
+          {% csrf_token %}
+          <input class="delete" type="submit" value="delete" />
+        </form>
+      </span>
+      {% endif %}
+    </div>
 
-  </div>
+    <div>
+      {% if not request.user.is_authenticated %}
+      <textarea name="comment">Login Required to comment</textarea>
+      <a href="{% url 'account:login' %}"> Comment </a>
+      {% endif %} {% if request.user.is_authenticated %}
+      <form method="POST" action="{% url 'apple:detail' item.id %}">
+        {% csrf_token %}
+        <textarea name="comment">Enter text here...</textarea>
+        <input type="submit" value="Comment" />
+      </form>
+      {% endif %}
 
-  <footer>
-    <p> Selling/Buying  </p>
-    <p> Email: jang0065@umn.edu </p>
-  </footer>
+      {% if comments %}
+      <ul>
+      {% for comment in comments %}
+      <li>{{comment.user_id}} :{{comment.text}}
+        {% if request.user == comment.user_id %}
+        <form
+          onsubmit="return confirm('Do you really want to delete?')"
+          method="post"
+          action="{% url 'apple:comment_delete' item.id comment.id %}"
+        >
+          {% csrf_token %}
+          <input  type="submit" value="X" />
+        </form>
+      {% endif %}
+    </li>
+      {% endfor %}
+    </ul>
+      {% endif %}
+
+    <footer>
+      <p>Selling/Buying </p>
+      <p>Email: jang0065@umn.edu</p>
+    </footer>
     <script src="{% static 'apple/detail.js' %}"></script>
   </body>
 </html>

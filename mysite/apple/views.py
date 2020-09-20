@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from .models import Item
+from .models import Comment
 from .forms import *
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -53,13 +54,18 @@ def new(request):
 		return render(request, 'apple/new.html',{'itemform':i})
 
 def detail(request, item_id):
-	try:
+	if request.method == 'POST':
 		item = Item.objects.get(pk=item_id)
-		item.hit = item.hit +1
-		item.save()
-	except Item.DoesNotExist:
-		raise Http404("Item does not exist")
-	return render(request, 'apple/detail.html', {'item': item})
+		comment = Comment(item_id = item, user_id=request.user, text= request.POST.get('comment'))
+		comment.save()
+	else:
+		try:
+			item = Item.objects.get(pk=item_id)
+			item.hit = item.hit +1
+			item.save()
+		except Item.DoesNotExist:
+			raise Http404("Item does not exist")
+	return render(request, 'apple/detail.html', {'item': item,'comments':Comment.objects.filter(item_id=item_id)})
 
 def edit(request, item_id):
 	if request.method == 'POST':
@@ -70,7 +76,6 @@ def edit(request, item_id):
 			return HttpResponseRedirect('/apple/')
 		else:
 			raise Http404("Item does not exist")
-
 	else:
 		try:
 			item = Item.objects.get(pk=item_id)
@@ -84,3 +89,11 @@ def delete(request, item_id):
 		item= Item.objects.get(pk=item_id)
 		item.delete()
 		return HttpResponseRedirect('/apple/')
+
+def comment_delete(request, item_id, comment_id):
+	if request.method == 'POST':
+		comment= Comment.objects.get(pk=comment_id)
+		comment.delete()
+		item= Item.objects.get(pk=item_id)
+		return render(request, 'apple/detail.html', {'item': item,'comments':Comment.objects.filter(item_id=item_id)})
+	raise Http404("Error")

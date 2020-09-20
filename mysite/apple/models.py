@@ -29,7 +29,6 @@ class Item(models.Model):
     ('IN','Incheon'),
     ('GW','Gwangju'),
     )
-
     author = models.CharField(max_length = 20, default="f")
     titleline = models.CharField(max_length=30, default=None)
     what = models.CharField(max_length=30, choices = WHAT_CHOICES)
@@ -40,3 +39,8 @@ class Item(models.Model):
     region = models.CharField(max_length=10, choices = REGION_CHOICES)
     hit = models.IntegerField(default=0)
     date = models.DateTimeField(default=timezone.now)
+class Comment(models.Model):
+    item_id = models.ForeignKey(Item, on_delete=models.CASCADE)
+    user_id =  models.ForeignKey(User,on_delete=models.CASCADE)
+    text =  models.TextField(default=None)
+    created_date = models.DateTimeField(default=timezone.now)
